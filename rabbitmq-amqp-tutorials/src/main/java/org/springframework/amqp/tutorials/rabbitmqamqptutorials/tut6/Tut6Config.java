@@ -27,7 +27,7 @@ public class Tut6Config {
     }
 
     @Bean
-    public Tut6Server Tut6Server() {
+    public Tut6Server server6() {
         return new Tut6Server();
     }
 }

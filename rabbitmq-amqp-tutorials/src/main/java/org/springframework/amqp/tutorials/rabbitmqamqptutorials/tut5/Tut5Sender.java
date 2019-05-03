@@ -3,6 +3,7 @@ package org.springframework.amqp.tutorials.rabbitmqamqptutorials.tut5;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,14 +14,15 @@ public class Tut5Sender {
     private RabbitTemplate template;
 
     @Autowired
-    private TopicExchange topic5_1;
+    @Qualifier("topic5_1")
+    private TopicExchange topic;
 
     @GetMapping("/send5_1")
     public String send1() {
 
         String message = "Hello to quick.orange.rabbit";
 
-        template.convertAndSend(topic5_1.getName(), "quick.orange.rabbit", message);
+        template.convertAndSend(topic.getName(), "quick.orange.rabbit", message);
 
         return "ok";
     }
@@ -30,7 +32,7 @@ public class Tut5Sender {
 
         String message = "Hello to lazy.orange.elephant";
 
-        template.convertAndSend(topic5_1.getName(), "lazy.orange.elephant", message);
+        template.convertAndSend(topic.getName(), "lazy.orange.elephant", message);
 
         return "ok";
     }
@@ -40,7 +42,7 @@ public class Tut5Sender {
 
         String message = "Hello to quick.orange.fox";
 
-        template.convertAndSend(topic5_1.getName(), "quick.orange.fox", message);
+        template.convertAndSend(topic.getName(), "quick.orange.fox", message);
 
         return "ok";
     }
@@ -51,7 +53,7 @@ public class Tut5Sender {
 
         String message = "Hello to lazy.brown.fox";
 
-        template.convertAndSend(topic5_1.getName(), "lazy.brown.fox", message);
+        template.convertAndSend(topic.getName(), "lazy.brown.fox", message);
 
         return "ok";
     }
@@ -61,7 +63,7 @@ public class Tut5Sender {
 
         String message = "Hello to lazy.pink.rabbit";
 
-        template.convertAndSend(topic5_1.getName(), "lazy.pink.rabbit", message);
+        template.convertAndSend(topic.getName(), "lazy.pink.rabbit", message);
 
         return "ok";
     }
@@ -71,7 +73,7 @@ public class Tut5Sender {
 
         String message = "Hello to quick.brown.fox";
 
-        template.convertAndSend(topic5_1.getName(), "quick.brown.fox", message);
+        template.convertAndSend(topic.getName(), "quick.brown.fox", message);
 
         return "ok";
     }

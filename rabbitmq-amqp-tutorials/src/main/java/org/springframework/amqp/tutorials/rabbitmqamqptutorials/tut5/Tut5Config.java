@@ -27,20 +27,22 @@ public class Tut5Config {
         return new AnonymousQueue();
     }
 
+
+    // * can substitute for exactly one word.
     @Bean
-    public Binding binding1a_5(TopicExchange topic5_1, Queue autoDeleteQueue5_1) {
+    public Binding binding5_1a(TopicExchange topic5_1, Queue autoDeleteQueue5_1) {
         return BindingBuilder.bind(autoDeleteQueue5_1).to(topic5_1).with("*.orange.*");
     }
 
     @Bean
-    public Binding binding1b_5(TopicExchange topic5_1, Queue autoDeleteQueue5_2) {
-        return BindingBuilder.bind(autoDeleteQueue5_2).to(topic5_1).with("*.*.rabbit");
+    public Binding binding5_1b(TopicExchange topic5_1, Queue autoDeleteQueue5_1) {
+        return BindingBuilder.bind(autoDeleteQueue5_1).to(topic5_1).with("*.*.rabbit");
     }
 
+    // # can substitute for zero or more words.
     @Bean
-    public Binding binding2a_5(TopicExchange topic5_1, Queue autoDeleteQueue5_2) {
+    public Binding binding5_2a(TopicExchange topic5_1, Queue autoDeleteQueue5_2) {
         return BindingBuilder.bind(autoDeleteQueue5_2).to(topic5_1).with("lazy.#");
     }
-
 
 }

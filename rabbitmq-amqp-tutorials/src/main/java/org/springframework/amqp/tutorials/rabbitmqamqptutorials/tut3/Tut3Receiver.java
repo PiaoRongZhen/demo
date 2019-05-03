@@ -9,7 +9,7 @@ public class Tut3Receiver {
         receive(in, 1);
     }
 
-    @RabbitListener(queues = "#{autoDeleteQueue3_1.name}")
+    @RabbitListener(queues = "#{autoDeleteQueue3_2.name}")
     public void receive2(String in) {
         receive(in, 2);
     }
