@@ -1,21 +1,11 @@
-package com.example.demo.entity;
+package com.example.demo.pojo;
 
-import javax.persistence.*;
-
-@Entity
 public class Hero {
 
-    @Id
-    @GeneratedValue
     private Integer id;
 
-    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private String ranking;
-
-    @Column(nullable = false)
     private Integer organizationId;
 
     public Hero() {
@@ -35,14 +25,6 @@ public class Hero {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getRanking() {
-        return ranking;
-    }
-
-    public void setRanking(String ranking) {
-        this.ranking = ranking;
     }
 
     public Integer getOrganizationId() {

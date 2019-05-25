@@ -1,18 +1,12 @@
-package com.example.demo.entity;
+package com.example.demo.pojo;
 
-import javax.persistence.*;
 
-@Entity
 public class Organization {
 
-    @Id
-    @GeneratedValue
     private Integer id;
 
-    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
     private Integer numberOfPeople;
 
     public Organization() {
