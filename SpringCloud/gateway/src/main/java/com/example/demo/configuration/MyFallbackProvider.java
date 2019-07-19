@@ -1,0 +1,71 @@
+package com.example.demo.configuration;
+
+import com.netflix.hystrix.exception.HystrixTimeoutException;
+import org.springframework.cloud.netflix.zuul.filters.route.FallbackProvider;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.client.ClientHttpResponse;
+import org.springframework.stereotype.Component;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.nio.charset.Charset;
+
+// 要想为 Zuul 添加回退，需要实现 FallbackProvider 接口。
+// 在实现类种，指定为哪个微服务提供回退，并提供一个 ClientHttpResponse 作为回退响应。
+@Component
+public class MyFallbackProvider implements FallbackProvider {
+
+    // 表明是为哪个微服务提供回退，* 表示为所有微服务提供回退
+    @Override
+    public String getRoute() {
+        return "*";
+    }
+
+    @Override
+    public ClientHttpResponse fallbackResponse(String route, Throwable cause) {
+        if (cause instanceof HystrixTimeoutException) {
+            return response(HttpStatus.GATEWAY_TIMEOUT);
+        } else {
+            return response(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    private ClientHttpResponse response(HttpStatus status) {
+        return new ClientHttpResponse() {
+            @Override
+            public HttpStatus getStatusCode() {
+                return status;
+            }
+
+            @Override
+            public int getRawStatusCode() {
+                return status.value();
+            }
+
+            @Override
+            public String getStatusText() {
+                return status.getReasonPhrase();
+            }
+
+            @Override
+            public void close() {
+            }
+
+            @Override
+            public InputStream getBody() {
+                return new ByteArrayInputStream("服务不可用，请稍后再试。".getBytes());
+            }
+
+            @Override
+            public HttpHeaders getHeaders() {
+                HttpHeaders headers = new HttpHeaders();
+                MediaType mediaType = new MediaType("application", "json", Charset.forName("UTF-8"));
+                headers.setContentType(mediaType);
+                return headers;
+            }
+        };
+    }
+
+}
